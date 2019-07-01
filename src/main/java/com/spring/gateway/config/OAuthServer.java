@@ -34,26 +34,29 @@ public class OAuthServer extends AuthorizationServerConfigurerAdapter {
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		clients.inMemory()
 				.withClient("handbook")
-				.secret(pwdEncoder.encode("password"))
-				.authorizedGrantTypes("password", "refresh_token", "authorization_code","implicit")
+				.secret(pwdEncoder.encode("handbook"))
+				.authorizedGrantTypes("password","client_credentials", "refresh_token", "authorization_code", "implicit")
+				//.authorizedGrantTypes("implicit")
 				.scopes("read", "write")
 				.autoApprove(true);
 	}
 
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-		endpoints.authenticationManager(authenticationManager)
-				//.accessTokenConverter(defaultAccessTokenConverter())
-				.userDetailsService(customUserDetailService);
+		endpoints.authenticationManager(authenticationManager)// .accessTokenConverter(defaultAccessTokenConverter())
+					.userDetailsService(customUserDetailService);
 	}
 
-	/*
-	 * @Bean public TokenStore tokenStore() { return new
-	 * JwtTokenStore(defaultAccessTokenConverter()); }
-	 * 
-	 * @Bean public JwtAccessTokenConverter defaultAccessTokenConverter() {
-	 * JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-	 * converter.setSigningKey("123"); return converter; }
-	 */
+	//@Bean
+	//public TokenStore tokenStore() {
+	//	return new JwtTokenStore(defaultAccessTokenConverter());
+	//}
+
+	//@Bean
+	//public JwtAccessTokenConverter defaultAccessTokenConverter() {
+	//	JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+	//	converter.setSigningKey("123");
+	//	return converter;
+	//}
 
 }
